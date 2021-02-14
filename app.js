@@ -22,17 +22,18 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick='selectItem(event,"${image.webformatURL}")' src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
-    toggleSpinner(true);
+    toggleSpinner(false);
   })
  
 }
 // fetch API
 const getImages = (query) => {
+  toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
-    toggleSpinner(false);
+  
 }
 
 let slideIndex = 0;
@@ -135,14 +136,16 @@ sliderBtn.addEventListener('click', function () {
 // Spinner Area
 const toggleSpinner = (show) => {
   const spinner = document.getElementById('loadingTimeSpinner');
+
   if(show){
-    spinner.classList.remove = ('d-none');
-    console.log(spinner.classList.value);
+    spinner.classList.remove('d-none');
+    // console.log(spinner.classList);
   }
   else{
-    spinner.classList.add = ('d-none');
-    console.log(spinner.classList.value);
+    spinner.classList.add('d-none');
+    // console.log(spinner.classList);
   }
+  // spinner.classList.toggle('d-none');
 }
 // Enter Key activation
 document.getElementById('search').addEventListener('keypress', function (event) {
